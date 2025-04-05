@@ -650,15 +650,15 @@ ports:
     protocol: TCP
     # -- See [upstream documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
     nodePort: # @schema type:[integer, null]; minimum:0
-    # redirections:
-    #   # -- Port Redirections
-    #   # Added in 2.2, one can make permanent redirects via entrypoints.
-    #   # Same sets of parameters: to, scheme, permanent and priority.
-    #   # https://docs.traefik.io/routing/entrypoints/#redirection
-    #   entryPoint:
-    #     to: websecure
-    #     permanent: true
-    #     scheme: https
+    redirections:
+      # -- Port Redirections
+      # Added in 2.2, one can make permanent redirects via entrypoints.
+      # Same sets of parameters: to, scheme, permanent and priority.
+      # https://docs.traefik.io/routing/entrypoints/#redirection
+      entryPoint:
+        to: websecure
+        permanent: true
+        scheme: https
     forwardedHeaders:
       # -- Trust forwarded headers information (X-Forwarded-*).
       trustedIPs: []
@@ -686,7 +686,7 @@ ports:
     hostPort: # @schema type:[integer, null]; minimum:0
     containerPort: # @schema type:[integer, null]; minimum:0
     expose:
-      default: false
+      default: true
     exposedPort: 443
     ## -- Different target traefik port on the cluster, useful for IP type LB
     targetPort: # @schema type:[string, integer, null]; minimum:0
@@ -761,10 +761,9 @@ tlsOptions: {}
 
 # -- TLS Store are created as [TLSStore CRDs](https://doc.traefik.io/traefik/https/tls/#default-certificate). This is useful if you want to set a default certificate. See EXAMPLE.md for details.
 tlsStore:
-  {}
-  # default:
-  #   defaultCertificate:
-  #     secretName: tls-cert
+  default:
+    defaultCertificate:
+      secretName: tls-cert
 
 service:
   enabled: true
@@ -942,7 +941,7 @@ extraObjects:
     spec:
       entryPoints:
         - web
-        # - websecure
+        - websecure
       routes:
         - kind: Rule
           match: PathPrefix(`/api`)
