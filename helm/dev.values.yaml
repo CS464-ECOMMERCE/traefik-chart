@@ -650,15 +650,15 @@ ports:
     protocol: TCP
     # -- See [upstream documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
     nodePort: # @schema type:[integer, null]; minimum:0
-    # redirections:
-    #   # -- Port Redirections
-    #   # Added in 2.2, one can make permanent redirects via entrypoints.
-    #   # Same sets of parameters: to, scheme, permanent and priority.
-    #   # https://docs.traefik.io/routing/entrypoints/#redirection
-    #   entryPoint:
-    #     to: websecure
-    #     permanent: true
-    #     scheme: https
+    redirections: 
+      # -- Port Redirections
+      # Added in 2.2, one can make permanent redirects via entrypoints.
+      # Same sets of parameters: to, scheme, permanent and priority.
+      # https://docs.traefik.io/routing/entrypoints/#redirection
+      # entryPoint:
+      #   to: websecure
+      #   permanent: true
+      #   scheme: https
     forwardedHeaders:
       # -- Trust forwarded headers information (X-Forwarded-*).
       trustedIPs: []
@@ -728,7 +728,7 @@ ports:
       keepAliveMaxTime: # @schema type:[string, integer, null]
     # --  See [upstream documentation](https://doc.traefik.io/traefik/routing/entrypoints/#tls)
     tls:
-      enabled: true
+      enabled: false
       options: ""
       certResolver: ""
       domains: []
@@ -932,7 +932,7 @@ extraObjects:
     spec:
       entryPoints:
         - web
-        - websecure
+        # - websecure
       routes:
         - kind: Rule
           match: PathPrefix(`/api`)
