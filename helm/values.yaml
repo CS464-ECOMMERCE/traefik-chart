@@ -944,7 +944,7 @@ extraObjects:
         - websecure
       routes:
         - kind: Rule
-          match: PathPrefix(`/api`)
+          match: PathPrefix(`/`)
           services:
             - kind: Service
               name: backend
